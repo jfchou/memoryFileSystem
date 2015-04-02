@@ -7,23 +7,21 @@ import java.io.InputStreamReader;
 
 
 public class MemFile {
-	//System.getProperty("user.dir") + "//src//config//testData.properties");
-	String curDir = System.getProperty("user.dir");
 	
 	private static void execute(String command) {
 		try {
             // using the Runtime exec method:
-            Process p = Runtime.getRuntime().exec(command);
-             
+            Process p = Runtime.getRuntime().exec(command);   
             BufferedReader stdInput = new BufferedReader(new
-                 InputStreamReader(p.getInputStream()));
- 
+                 InputStreamReader(p.getInputStream())); 
             BufferedReader stdError = new BufferedReader(new
                  InputStreamReader(p.getErrorStream()));
             String s = null;
-            // read any errors from the attempted command
-            while ((s = stdError.readLine()) != null)
+            // read any errors from the attempted command if any
+            while ((s = stdError.readLine()) != null) {
                 System.out.println(s);
+                return;
+            }
             // read the output from the command
             while ((s = stdInput.readLine()) != null)
                 System.out.println(s);
@@ -73,28 +71,34 @@ public class MemFile {
 		    System.err.println(ioe.getMessage());
 		}
 	}
+	
 	public static void display(String path) {
 		String cmd = "cat " + path;
 		execute(cmd);
 	}
+	
 	public static void list(String dpath) {
 		String cmd = "ls -la " + dpath;
 		execute(cmd);
 	}
+	
 	public static void search(String name) {
 		String cmd = "find . -name " + name + " -print";
 		execute(cmd);
 	}
+	
 	public static void search(String name, String path) {
 		String cmd = "cd " + path; 
 		execute(cmd);
 		cmd = "find . -name " + name + " -print";
 		execute(cmd);
 	}
+	
 	public static void copyDir(String from, String to) {
 		String cmd = "cp -R " + from + " " + to;
 		execute(cmd);
 	}
+	
 	public static void main(String[] args) {
 		String curDir =  System.getProperty("user.dir");
 		String dpath = curDir + "/testFolder";
@@ -128,5 +132,4 @@ public class MemFile {
 		cleanup(dpath);
 		cleanup(tpath);
 	}
-
 }
