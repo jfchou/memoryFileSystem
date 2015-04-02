@@ -125,8 +125,8 @@ public class MemFile {
 		print("copy from dir " + dpath + " to dir " + tpath);
 		copyDir(dpath, tpath);
 		print("cleanup the dir and their files created so far");
-		//cleanup(dpath);
-		//cleanup(tpath);
+		cleanup(dpath);
+		cleanup(tpath);
 	}
 
 }
